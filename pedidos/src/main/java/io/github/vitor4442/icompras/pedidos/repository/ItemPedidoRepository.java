@@ -1,7 +1,8 @@
-package io.github.vitor4442.icompras.servicos.repository;
+package io.github.vitor4442.icompras.pedidos.repository;
 
-import io.github.vitor4442.icompras.servicos.model.ItemPedido;
-import io.github.vitor4442.icompras.servicos.model.Pedido;
+
+import io.github.vitor4442.icompras.pedidos.model.ItemPedido;
+import io.github.vitor4442.icompras.pedidos.model.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

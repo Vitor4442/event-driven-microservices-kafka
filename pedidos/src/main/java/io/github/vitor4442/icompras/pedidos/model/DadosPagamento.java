@@ -1,7 +1,8 @@
-package io.github.vitor4442.icompras.servicos.model;
+package io.github.vitor4442.icompras.pedidos.model;
 
 
-import io.github.vitor4442.icompras.servicos.model.enums.TipoPagamento;
+
+import io.github.vitor4442.icompras.pedidos.model.enums.TipoPagamento;
 import lombok.Data;
 
 @Data

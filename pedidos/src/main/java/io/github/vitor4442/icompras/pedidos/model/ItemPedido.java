@@ -1,4 +1,4 @@
-package io.github.vitor4442.icompras.servicos.model;
+package io.github.vitor4442.icompras.pedidos.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

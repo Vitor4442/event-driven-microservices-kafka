@@ -1,6 +1,7 @@
-package io.github.vitor4442.icompras.servicos.model;
+package io.github.vitor4442.icompras.pedidos.model;
 
-import io.github.vitor4442.icompras.servicos.model.enums.StatusPedido;
+
+import io.github.vitor4442.icompras.pedidos.model.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
