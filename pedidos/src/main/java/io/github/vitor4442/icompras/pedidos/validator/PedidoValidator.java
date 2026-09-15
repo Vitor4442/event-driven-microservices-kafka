@@ -7,6 +7,7 @@ import io.github.vitor4442.icompras.pedidos.client.representation.ClienteReprese
 import io.github.vitor4442.icompras.pedidos.client.representation.ProdutoRepresentation;
 import io.github.vitor4442.icompras.pedidos.model.ItemPedido;
 import io.github.vitor4442.icompras.pedidos.model.Pedido;
+import io.github.vitor4442.icompras.pedidos.model.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,24 +29,34 @@ public class PedidoValidator {
 
     private void validarCliente(Long codigoCliente){
         try{
-            ResponseEntity<ClienteRepresentation> response = clientesClient.obterDados(codigoCliente);
+            var response = clientesClient.obterDados(codigoCliente);
             ClienteRepresentation cliente = response.getBody();
             log.info("Cliente de código {} encontrado: {}", cliente.codigo(), cliente.nome());
-        } catch (FeignException.NotFound e) {
-            log.error("Cliente  não encontrado");
+
+            if(!cliente.ativo()){
+                throw new ValidationException("codigoCliente", "Cliente Inativo.");
+            }
+
+        } catch (FeignException.NotFound e){
+            var message = String.format("Cliente de código %d não encontrado.", codigoCliente);
+            throw new ValidationException("codigoCliente", message);
         }
 
     }
 
     private void validarItem(ItemPedido item){
-        try{
-            ResponseEntity<ProdutoRepresentation> response = produtosClient.obterDados(item.getCodigoProduto());
+        try {
+            var response = produtosClient.obterDados(item.getCodigoProduto());
             ProdutoRepresentation produto = response.getBody();
-            log.info("Cliente de código {} encontrado: {}", produto.codigo(), produto.nome());
+            log.info("Produto de código {} encontrado: {}", produto.codigo(), produto.nome());
+
+            if(!produto.ativo()){
+                throw new ValidationException("codigoProduto", "Produto inativo.");
+            }
+
         } catch (FeignException.NotFound e){
-            log.error("Produto de código de não encontrado: {}", item.getCodigo());
-        }catch (FeignException.MethodNotAllowed e){
-            log.error("Produto de código de não encontrado: {}", item.getCodigo());
+            var message = String.format("Produto de código %d não encontrado.", item.getCodigoProduto());
+            throw new ValidationException("codigoProduto", message);
         }
     }
 }
