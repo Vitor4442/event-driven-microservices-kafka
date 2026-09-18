@@ -2,8 +2,10 @@ package io.github.vitor4442.icompras.pedidos.service;
 
 
 import io.github.vitor4442.icompras.pedidos.client.ServicoBancarioClient;
+import io.github.vitor4442.icompras.pedidos.model.DadosPagamento;
 import io.github.vitor4442.icompras.pedidos.model.Pedido;
 import io.github.vitor4442.icompras.pedidos.model.enums.StatusPedido;
+import io.github.vitor4442.icompras.pedidos.model.enums.TipoPagamento;
 import io.github.vitor4442.icompras.pedidos.repository.ItemPedidoRepository;
 import io.github.vitor4442.icompras.pedidos.repository.PedidoRepository;
 import io.github.vitor4442.icompras.pedidos.validator.PedidoValidator;
@@ -61,5 +63,32 @@ public class PedidoService {
         }
 
         repository.save(pedido);
+    }
+
+    @Transactional
+    public void adicionarNovoPagamento(Long codigoPedido, String dadosCartao, TipoPagamento tipo){
+        Optional<Pedido> pedidoEncontrado = repository.findById(codigoPedido);
+
+        if(pedidoEncontrado.isEmpty()){
+            return;
+        }
+
+        var pedido = pedidoEncontrado.get();
+
+        DadosPagamento dadosPagamento = new DadosPagamento();
+        dadosPagamento.setTipoPagamento(tipo);
+        dadosPagamento.setDados(dadosCartao);
+
+        pedido.setDadosPagamento(dadosPagamento);
+        pedido.setStatus(StatusPedido.REALIZADO);
+        pedido.setObservacoes("Novo pagamento realizado, aguardando o novo processamento.");
+
+        String novaChavePagamento = servicoBancarioClient.solicitarPagamento(pedido);
+        pedido.setChavePagamento(novaChavePagamento);
+
+        repository.save(pedido);
+
+
+
     }
 }
