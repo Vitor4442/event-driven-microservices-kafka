@@ -6,6 +6,7 @@ import io.github.vitor4442.icompras.pedidos.model.DadosPagamento;
 import io.github.vitor4442.icompras.pedidos.model.Pedido;
 import io.github.vitor4442.icompras.pedidos.model.enums.StatusPedido;
 import io.github.vitor4442.icompras.pedidos.model.enums.TipoPagamento;
+import io.github.vitor4442.icompras.pedidos.model.exception.ItemNaoEncontradoException;
 import io.github.vitor4442.icompras.pedidos.repository.ItemPedidoRepository;
 import io.github.vitor4442.icompras.pedidos.repository.PedidoRepository;
 import io.github.vitor4442.icompras.pedidos.validator.PedidoValidator;
@@ -49,8 +50,7 @@ public class PedidoService {
         Optional<Pedido> pedidoEncontrado = repository.findByCodigoAndChavePagamento(codigo, chavePagamento);
 
         if(pedidoEncontrado.isEmpty()){
-            String msg = String.format("Pedido não encontrado para o código %d e chave pagamento %s", codigo, chavePagamento);
-            log.error(msg);
+            throw new ItemNaoEncontradoException("Pedido não encontrado para o código informado");
         }
 
         Pedido pedido = pedidoEncontrado.get();
