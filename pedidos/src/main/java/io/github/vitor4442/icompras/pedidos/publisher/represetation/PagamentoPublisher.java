@@ -19,7 +19,7 @@ public class PagamentoPublisher {
     private final KafkaTemplate<String, String> kafkaTemplate;
 
 
-    @Value("${icompras.config.kafka.topics.pedidos.pagos}")
+    @Value("${icompras.config.kafka.topics.pedidos-pagos}")
     private String topico;
 
     public void publicar(Pedido pedido){
