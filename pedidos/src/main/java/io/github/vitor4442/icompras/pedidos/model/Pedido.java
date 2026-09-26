@@ -1,6 +1,7 @@
 package io.github.vitor4442.icompras.pedidos.model;
 
 
+import io.github.vitor4442.icompras.pedidos.client.representation.ClienteRepresentation;
 import io.github.vitor4442.icompras.pedidos.model.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -52,5 +53,8 @@ public class Pedido {
 
     @OneToMany(mappedBy = "pedido")
     private List<ItemPedido> itens;
+
+    @Transient
+    private ClienteRepresentation dadosCliente;
 
 }
