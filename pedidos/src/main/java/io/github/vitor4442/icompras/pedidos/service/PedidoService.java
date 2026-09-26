@@ -12,6 +12,7 @@ import io.github.vitor4442.icompras.pedidos.model.Pedido;
 import io.github.vitor4442.icompras.pedidos.model.enums.StatusPedido;
 import io.github.vitor4442.icompras.pedidos.model.enums.TipoPagamento;
 import io.github.vitor4442.icompras.pedidos.model.exception.ItemNaoEncontradoException;
+import io.github.vitor4442.icompras.pedidos.publisher.represetation.PagamentoPublisher;
 import io.github.vitor4442.icompras.pedidos.repository.ItemPedidoRepository;
 import io.github.vitor4442.icompras.pedidos.repository.PedidoRepository;
 import io.github.vitor4442.icompras.pedidos.validator.PedidoValidator;
@@ -35,6 +36,7 @@ public class PedidoService {
     private final ServicoBancarioClient servicoBancarioClient;
     private final ClientesClient apiClient;
     private final ProdutosClient apiProdutos;
+    private final PagamentoPublisher pagamentoPublisher;
 
     @Transactional
     public Pedido criarPedido(Pedido pedido){
@@ -64,14 +66,20 @@ public class PedidoService {
         Pedido pedido = pedidoEncontrado.get();
 
         if(sucesso){
-            pedido.setStatus(StatusPedido.PAGO);
-
+            prepararEPublicar(pedido);
         } else {
             pedido.setStatus(StatusPedido.ERRO_PAGAMENTO);
             pedido.setObservacoes(observacoes);
         }
 
         repository.save(pedido);
+    }
+
+    private void prepararEPublicar(Pedido pedido) {
+        pedido.setStatus(StatusPedido.PAGO);
+        carregarDadosCliente(pedido);
+        carregarItensPedido(pedido);
+        pagamentoPublisher.publicar(pedido);
     }
 
     @Transactional

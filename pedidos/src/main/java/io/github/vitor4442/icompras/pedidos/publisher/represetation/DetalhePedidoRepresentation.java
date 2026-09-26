@@ -7,7 +7,7 @@ import java.util.List;
 
 public record DetalhePedidoRepresentation(
         Long codigo,
-        long codigoCliente,
+        Long codigoCliente,
         String nome,
         String cpf,
         String logradouro,
@@ -18,6 +18,8 @@ public record DetalhePedidoRepresentation(
         String dataPedido,
         BigDecimal total,
         StatusPedido status,
+        String urlNotaFiscal,
+        String codigoRastreio,
         List<DetalhePedidoRepresentation> itens
 ) {
 }
