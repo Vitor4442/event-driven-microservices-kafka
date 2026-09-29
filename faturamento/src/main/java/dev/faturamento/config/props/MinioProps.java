@@ -11,9 +11,8 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class MinioProps {
 
-
     private String url;
-    private String accessKey;
+    private String acessKey;
     private String secretKey;
     private String bucketName;
 }
