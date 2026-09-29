@@ -16,7 +16,7 @@ public class BucketConfig {
     public MinioClient bucketClient(){
         return MinioClient.builder()
                 .endpoint(props.getUrl())
-                .credentials(props.getAccessKey(), props.getSecretKey())
+                .credentials(props.getAcessKey(), props.getSecretKey())
                 .build();
     }
 }
