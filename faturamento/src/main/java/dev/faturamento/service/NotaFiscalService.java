@@ -14,9 +14,9 @@ import java.util.Map;
 @Service
 public class NotaFiscalService {
 
-    @Value("${classpath:reports/nota-fiscal.jrxml}")
+    @Value("classpath:reports/nota-fiscal.jrxml")
     private Resource notaFiscal;
-    @Value("${classpath:reports/logo.png}")
+    @Value("classpath:reports/logo.png")
     private Resource logo;
 
     public byte[] gerarNota(Pedido pedido){

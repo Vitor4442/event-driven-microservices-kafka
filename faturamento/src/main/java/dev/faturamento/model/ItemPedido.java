@@ -1,14 +1,18 @@
 package dev.faturamento.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.math.BigDecimal;
 
-public record ItemPedido(
-        Long codigo,
-        String descrição,
-        BigDecimal valorUnitario,
-        Integer quantidade,
-        BigDecimal total) {
-    public BigDecimal getTotal(){
-        return BigDecimal.valueOf(this.quantidade).multiply(this.valorUnitario);
-    }
+@Data
+@AllArgsConstructor
+public class ItemPedido {
+
+    private Long codigo;
+    private String nome;
+    private BigDecimal valorUnitario;
+    private Integer quantidade;
+    private BigDecimal total;
+
 }
