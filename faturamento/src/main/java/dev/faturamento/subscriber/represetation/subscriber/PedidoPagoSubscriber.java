@@ -1,7 +1,7 @@
 package dev.faturamento.subscriber.represetation.subscriber;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.faturamento.GeradorNotaFiscalService;
+import dev.faturamento.service.GeradorNotaFiscalService;
 import dev.faturamento.mapper.PedidoMapper;
 import dev.faturamento.model.Pedido;
 import dev.faturamento.subscriber.represetation.DetalhePedidoRepresentation;

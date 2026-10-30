@@ -1,9 +1,8 @@
-package dev.faturamento;
+package dev.faturamento.service;
 
 import dev.faturamento.bucket.BucketFile;
 import dev.faturamento.bucket.BucketService;
 import dev.faturamento.model.Pedido;
-import dev.faturamento.service.NotaFiscalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
