@@ -22,7 +22,7 @@ public class Produto {
     private BigDecimal valorUnitario;
 
     @Column(name = "ativo")
-    private boolean ativo;
+    private boolean ativo = true;
 
     @PrePersist
     public void prePersist(){

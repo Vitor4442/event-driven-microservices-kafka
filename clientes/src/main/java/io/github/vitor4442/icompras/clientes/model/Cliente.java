@@ -34,7 +34,7 @@ public class Cliente {
     private String telefone;
 
     @Column(name = "ativo")
-    private boolean ativo;
+    private boolean ativo = true;
 
     @PrePersist
     public void prePersist(){
